@@ -1,0 +1,276 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1053{\fonttbl{\f0\fnil\fcharset0 Courier New;}}
+\viewkind4\uc1\pard\qc\f0\fs20\par
+\par
+\b MSA 1.0  (BUILD 11)\par
+\b0\par
+Copyright(C)\par
+2001\par
+Robert \'d6stling\par
+\par
+\ul robost86@hotmail.com\par
+\pard\ulnone\par
+\par
+                \ul Copyright\ulnone\par
+\par
+        You are free to do whatever you want to do with MSA 1.0\par
+        (Build 11), except selling it. Feel free to modify the source\par
+        code, but please don't just delete my copyright.\par
+\par
+\par
+                \ul Bugs?\ulnone\par
+\par
+        When this package is released, there are no known bugs. If\par
+        you discover a bug, or just want to come with a suggestion or\par
+        a comment, just e-mail me (robost86@hotmail.com).\par
+\par
+\par
+                \ul What's MSA?\ulnone\par
+\par
+        MSA is a new freeware x86 assembler. It supports all 8086\par
+        instructions and most of the 80186/80286 instructions. It\par
+        only supports flat binary output (.COM files). Written by\par
+        a 14-year old Swedish programmer (that's why my english\par
+        isn't very good)-:\par
+\par
+        MSA is pretty fast, much faster than NASM, and the only file\par
+        you'll need to build a program is MSA.COM (27 KB). It runs\par
+        fine on my old 286.\par
+\par
+        I wrote MSA in C, using Borland C++ 2.0, but I don't think\par
+        it should be very hard to port to another compiler. The\par
+        source code is not commented, not structured, so, it may\par
+        be a little hard to read...\par
+\par
+        I have not tested MSA in FreeDOS yet, but there should not\par
+        be any difference between running MSA in a DOS box, real-mode\par
+        MS-DOS or FreeDOS.\par
+\par
+\par
+                \ul System Requirements\ulnone\par
+                \par
+        MSA had been tested on the following computer, and it runs just fine.\par
+\par
+                \ul Toshiba 3100\par
+\ulnone\par
+                CPU:    80286\par
+                RAM:    640 KB\par
+                HD:     10 MB\par
+                OS:     Toshiba DOS 5.0\par
+                Screen: Small B/W plasma screen\par
+\par
+        Your HD will not be filled just by installing MSA...\par
+\par
+                168 KB (full installation)\par
+                27 KB (minimum installation)\par
+\par
+        MSA comes with both a 8086 and a 80186+ executable.\par
+\par
+                \ul Using MSA\ulnone\par
+\par
+        MSA is a command-line program, use your favourite editor to\par
+        edit the source files. Here are a more detailed description\par
+        of the different command-line options MSA supports. (These\par
+        command-line options are case insensitive, like the rest of\par
+        MSA.\par
+\par
+\par
+        =============================================================\par
+\par
+                -o              - Set output file\par
+\par
+        Use: -ofile.com, -odisk.bin\par
+\par
+        There can only be one output file per compile, if more than\par
+        one output files are present, the last one will be used. If\par
+        no output file is present, you'll see the built-in help screen.\par
+\par
+        =============================================================\par
+\par
+                -p              - Nr of times to pass the file(s)\par
+\par
+        Use: -p3, -p1000\par
+\par
+        This is an optional command. -p2 is used if you don't type\par
+        anything else.\par
+\par
+        =============================================================\par
+\par
+                -s              - Set starting point\par
+\par
+        Use: -s0, -s0x7c00\par
+\par
+        This is an optional command, if you don't use this option,\par
+        the standard DOS .COM starting point (0x100) is used.\par
+\par
+        =============================================================\par
+\par
+                -b              - Set buffer size\par
+\par
+        Use: -b0x400, -b0x100\par
+\par
+        This option changes the size of the output buffer kept in\par
+        memory. Should be a value between 0x100 (256) and 0x4000\par
+        (16 KB).\par
+\par
+        =============================================================\par
+\par
+                -m              - Set output level\par
+\par
+        Use: -m0, -m1, -m2\par
+\par
+        m0 means: "only report errors"\par
+        m1 means: "only report errors and serious warnings"\par
+        m2 means: "report all"\par
+\par
+\par
+        All other commands, not beginning with '-' will be assumed\par
+        to be input files.\par
+\par
+\par
+\par
+                \ul The syntax of MSA\ulnone\par
+\par
+        MSA:s syntax is similar to the syntax of NASM. I think every\par
+        documented feature of MSA is supported by NASM, but this does\par
+        _not_ mean that a NASM program always can be assebled by MSA.\par
+        For example, MSA has no 32-bit support.\par
+\par
+        \ul Constants\ulnone\par
+\par
+        There are two ways of declaring constants in MSA.\par
+\par
+        1.      ident   EQU     value\par
+        2.      CONST   ident   value\par
+\par
+        I recommend the first way, for compatibility with NASM.\par
+        A constant value may use following operators:\par
+                '+', '-', '*', '/' and '%'\par
+        But NOT:\par
+                '(' and ')'\par
+\par
+        You may also use following constants:\par
+                $ and $$\par
+        (A non NASM-compatible synonyme for '$' is 'offset')\par
+\par
+        $ is the offset (offset of output file + staring point)\par
+        $$ is the starting point\par
+\par
+        You may only define integer constants, NOT floating point\par
+        or string constants.\par
+\par
+        Examples of valid constants:\par
+\par
+        data_start      EQU     $+0x100\par
+        my_sweet        EQU     0x4*0x13\par
+        lord            EQU     $$-0x80\par
+\par
+        \ul Labels, DB, DW and DD\ulnone\par
+\par
+\par
+        In MSA, you define labels in the same way as you do in all\par
+        programming languages,\par
+\par
+label:\par
+\par
+        where 'label' is the name of your label. There is another way to\par
+        define a label, only used with DB, DW and DD. This command:\par
+\par
+fname   DB      "filename.dat",0\par
+idword  DW      0x51a0\par
+\par
+        does the same thing as:\par
+\par
+fname:  DB      "filename.dat",0\par
+idword: DB      0x51a0\par
+\par
+\par
+        DB can be used to declare strings and 8-bit values:\par
+\par
+my_db   DB      "this is a string",1,2,3,0x10,0x20,0x30,14%3\par
+\par
+\par
+        DW is used only to declare 16-bit variables:\par
+\par
+my_dw   DW      0x2314,0x5214,0x5382,0x0000,4,1,6\par
+\par
+\par
+        DD is used only to declare 32-bit variables:\par
+\par
+my_dd   DD      0x23a36b14,0x552814,0x5ba4382,0x1000000,4,51,6\par
+\par
+\par
+        \ul Comments\ulnone\par
+\par
+        Ordninary assembler comments, one-line comments beginning with\par
+        ';', are the only valid comments in MSA.\par
+\par
+\par
+        \ul Include\ulnone\par
+\par
+        Does the same thing as typing an extra input file in the command\par
+        line (adds the file to the 'to do' list).\par
+\par
+        Example:\par
+\par
+        ; f1.asm\par
+\par
+        mov     ax,1\par
+        include "f2.asm"\par
+        mov     ax,3\par
+\par
+        =============================================================\par
+\par
+        ; f2.asm\par
+\par
+        mov     ax,2\par
+\par
+\par
+        This code will generate following in NASM:\par
+\par
+        mov     ax,1    ; from f1.asm\par
+        mov     ax,2    ; from f2.asm\par
+        mov     ax,3    ; from f1.asm\par
+\par
+        , but MSA will assembler this:\par
+\par
+        mov     ax,1    ; from f1.asm\par
+        mov     ax,3    ; from f1.asm\par
+        mov     ax,2    ; from f2.asm\par
+\par
+        When MSA finds an 'include' directive, the file is placed as the\par
+        last item if the 'to do' list, while NASM starts assembling the\par
+        new file, and when that's done, it returns to the main file.\par
+        If a file that is allready included in the 'to do' list in included\par
+        again, nothing happends (to avoid cross-referencing).\par
+\par
+\par
+        \ul Space\ulnone\par
+\par
+        NASM will assemble this\par
+\par
+        mov     ax, 3\par
+        cmp     al, 2\par
+\par
+        , but MSA says 'Syntax error'. Spaces aren't allowed everywhere\par
+        in MSA. Not within identifiers, or between operands (like in the\par
+        example above). Use this instead:\par
+\par
+        mov     ax,3\par
+        cmp     al,2\par
+\par
+\par
+        \ul Opcodes\ulnone\par
+\par
+        If you want to use the short opcodes for the 1-step\par
+        bit shift/rotation instructions, you'll have to type:\par
+\par
+        shl1    ax\par
+        ror1    bl\par
+        ...\par
+\par
+\par
+              \b   22:47 12 Jan 2001\par
+\b0                  End of document\par
+\par
+}
+ 

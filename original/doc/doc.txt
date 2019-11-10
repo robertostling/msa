@@ -1,0 +1,288 @@
+
+
+                               MSA 1.0  (BUILD 11)
+                               -=-=-=-=-=-=-=-=-=-
+                                  Copyright(C)
+                                      2001
+                                 Robert ™stling
+                               -=-=-=-=-=-=-=-=-=-
+                               robost86@hotmail.com
+
+
+
+                Copyright
+                -=-=-=-=-
+
+        You are free to do whatever you want to do with MSA 1.0
+        (Build 11), except selling it. Feel free to modify the source
+        code, but please don't just delete my copyright.
+
+
+                Bugs?
+                -=-=-
+
+        When this package is released, there are no known bugs. If
+        you discover a bug, or just want to come with a suggestion or
+        a comment, just e-mail me (robost86@hotmail.com).
+
+
+                What's MSA?
+                -=-=-=-=-=-
+
+        MSA is a new freeware x86 assembler. It supports all 8086
+        instructions and most of the 80186/80286 instructions. It
+        only supports flat binary output (.COM files). Written by
+        a 14-year old Swedish programmer (that's why my english
+        isn't very good)-:
+
+        MSA is pretty fast, much faster than NASM, and the only file
+        you'll need to build a program is MSA.COM (27 KB). It runs
+        fine on my old 286.
+
+        I wrote MSA in C, using Borland C++ 2.0, but I don't think
+        it should be very hard to port to another compiler. The
+        source code is not commented, not structured, so, it may
+        be a little hard to read...
+
+        I have not tested MSA in FreeDOS yet, but there should not
+        be any difference between running MSA in a DOS box, real-mode
+        MS-DOS or FreeDOS.
+
+
+                System Requirements  :-)
+                -=-=-=-=-=-=-=-=-=-  -=-
+
+        MSA had been tested on the following computer, and it runs just fine.
+
+                Toshiba 3100
+                ============
+
+                CPU:    80286
+                RAM:    640 KB
+                HD:     10 MB
+                OS:     Toshiba DOS 5.0
+                Screen: Small B/W plasma screen
+
+        Your HD will not be filled just by installing MSA...
+
+                168 KB (full installation)
+                27 KB (minimum installation)
+
+        MSA comes with both a 8086 and a 80186+ executable.
+
+
+                Using MSA
+                -=-=-=-=-
+
+        MSA is a command-line program, use your favourite editor to
+        edit the source files. Here are a more detailed description
+        of the different command-line options MSA supports. (These
+        command-line options are case insensitive, like the rest of
+        MSA.
+
+
+        =============================================================
+
+                -o              - Set output file
+
+        Use: -ofile.com, -odisk.bin
+
+        There can only be one output file per compile, if more than
+        one output files are present, the last one will be used. If
+        no output file is present, you'll see the built-in help screen.
+
+        =============================================================
+
+                -p              - Nr of times to pass the file(s)
+
+        Use: -p3, -p1000
+
+        This is an optional command. -p2 is used if you don't type
+        anything else.
+
+        =============================================================
+
+                -s              - Set starting point
+
+        Use: -s0, -s0x7c00
+
+        This is an optional command, if you don't use this option,
+        the standard DOS .COM starting point (0x100) is used.
+
+        =============================================================
+
+                -b              - Set buffer size
+
+        Use: -b0x400, -b0x100
+
+        This option changes the size of the output buffer kept in
+        memory. Should be a value between 0x100 (256) and 0x4000
+        (16 KB).
+
+        =============================================================
+
+                -m              - Set output level
+
+        Use: -m0, -m1, -m2
+
+        m0 means: "only report errors"
+        m1 means: "only report errors and serious warnings"
+        m2 means: "report all"
+
+
+        All other commands, not beginning with '-' will be assumed
+        to be input files.
+
+
+
+                The syntax of MSA
+                -=-=-=-=-=-=-=-=-
+
+        MSA:s syntax is similar to the syntax of NASM. I think every
+        documented feature of MSA is supported by NASM, but this does
+        _not_ mean that a NASM program always can be assebled by MSA.
+        For example, MSA has no 32-bit support.
+
+        Constants
+        =========
+
+        There are two ways of declaring constants in MSA.
+
+        1.      ident   EQU     value
+        2.      CONST   ident   value
+
+        I recommend the first way, for compatibility with NASM.
+        A constant value may use following operators:
+                '+', '-', '*', '/' and '%'
+        But NOT:
+                '(' and ')'
+
+        You may also use following constants:
+                $ and $$
+        (A non NASM-compatible synonyme for '$' is 'offset')
+
+        $ is the offset (offset of output file + staring point)
+        $$ is the starting point
+
+        You may only define integer constants, NOT floating point
+        or string constants.
+
+        Examples of valid constants:
+
+        data_start      EQU     $+0x100
+        my_sweet        EQU     0x4*0x13
+        lord            EQU     $$-0x80
+
+        Labels, DB, DW and DD
+        =====================
+
+
+        In MSA, you define labels in the same way as you do in all
+        programming languages,
+
+label:
+
+        where 'label' is the name of your label. There is another way to
+        define a label, only used with DB, DW and DD. This command:
+
+fname   DB      "filename.dat",0
+idword  DW      0x51a0
+
+        does the same thing as:
+
+fname:  DB      "filename.dat",0
+idword: DB      0x51a0
+
+
+        DB can be used to declare strings and 8-bit values:
+
+my_db   DB      "this is a string",1,2,3,0x10,0x20,0x30,14%3
+
+
+        DW is used only to declare 16-bit variables:
+
+my_dw   DW      0x2314,0x5214,0x5382,0x0000,4,1,6
+
+
+        DD is used only to declare 32-bit variables:
+
+my_dd   DD      0x23a36b14,0x552814,0x5ba4382,0x1000000,4,51,6
+
+
+        Comments
+        ========
+
+        Ordninary assembler comments, one-line comments beginning with
+        ';', are the only valid comments in MSA.
+
+
+        Include
+        =======
+
+        Does the same thing as typing an extra input file in the command
+        line (adds the file to the 'to do' list).
+
+        Example:
+
+        ; f1.asm
+
+        mov     ax,1
+        include "f2.asm"
+        mov     ax,3
+
+        =============================================================
+
+        ; f2.asm
+
+        mov     ax,2
+
+
+        This code will generate following in NASM:
+
+        mov     ax,1    ; from f1.asm
+        mov     ax,2    ; from f2.asm
+        mov     ax,3    ; from f1.asm
+
+        , but MSA will assembler this:
+
+        mov     ax,1    ; from f1.asm
+        mov     ax,3    ; from f1.asm
+        mov     ax,2    ; from f2.asm
+
+        When MSA finds an 'include' directive, the file is placed as the
+        last item if the 'to do' list, while NASM starts assembling the
+        new file, and when that's done, it returns to the main file.
+        If a file that is allready included in the 'to do' list in included
+        again, nothing happends (to avoid cross-referencing).
+
+
+        Space
+        =====
+
+        NASM will assemble this
+
+        mov     ax, 3
+        cmp     al, 2
+
+        , but MSA says 'Syntax error'. Spaces aren't allowed everywhere
+        in MSA. Not within identifiers, or between operands (like in the
+        example above). Use this instead:
+
+        mov     ax,3
+        cmp     al,2
+
+
+        Opcodes
+        =======
+
+        If you want to use the short opcodes for the 1-step
+        bit shift/rotation instructions, you'll have to type:
+
+        shl1    ax
+        ror1    bl
+        ...
+
+
+                22:47 12 Jan 2001
+                -=-=-=-=-=-=-=-=-
+                 End of document

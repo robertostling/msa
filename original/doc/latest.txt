@@ -1,0 +1,15 @@
+
+        News in version 1.0.12:
+
+        00:03 14 Jan 2001
+        * Char constant added.
+        * Faster (does not write to disk if not final pass)
+
+
+        15:05 5 Jun 2001
+        * BUILD.BAT able to make 8086 compatible code
+
+
+        01:02 6 Jun 2001
+        * Install program written
+        * A few small bugs fixed
